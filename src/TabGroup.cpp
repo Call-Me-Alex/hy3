@@ -782,12 +782,12 @@ void Hy3TabGroup::renderTabBar() {
 
 	auto render_entry = [&](Hy3TabBarEntry& entry) {
 		Vector2D entry_pos = {
-		    (box.x + (entry.offset->value() * box.w) + (*padding * 0.5)) * scale,
+		    (box.x + (entry.offset->value() * box.w) + ((*padding < 0) ? 0 : *padding)) * scale,
 		    scaledBox.y
 		        + ((entry.vertical_pos->value() * (box.h + *padding) * scale)
 		           * (*enter_from_top ? -1 : 1)),
 		};
-		Vector2D entry_size = {((entry.width->value() * box.w) - *padding) * scale, scaledBox.h};
+		Vector2D entry_size = {((entry.width->value() * box.w) - ((*padding < 0) ? 0 : *padding)) * scale, scaledBox.h};
 		if (entry_size.x < 0 || entry_size.y < 0 || fade_opacity == 0.0) return;
 
 		CBox box = {
